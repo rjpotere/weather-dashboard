@@ -1,0 +1,23 @@
+ul li.uvi {
+    background: rgb(131, 243, 131);
+}
+
+.results {
+    flex-direction: column;
+}
+
+.result-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.city-icon {
+    display: flex;
+    align-items: flex-end;
+}
+
+#current-forcast {
+    list-style-type: none;
+    padding-inline-start: 0;
+
+}
