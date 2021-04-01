@@ -1,5 +1,17 @@
-ul li.uvi {
+ul li.low {
     background: rgb(131, 243, 131);
+}
+
+ul li.moderate {
+    background: rgb(241, 243, 131);
+}
+
+ul li.high {
+    background: rgb(255, 161, 19);
+}
+
+ul li.extreme {
+    background: rgb(255, 27, 19);
 }
 
 .results {
@@ -20,4 +32,8 @@ ul li.uvi {
     list-style-type: none;
     padding-inline-start: 0;
 
+}
+
+#future {
+    display: flex;
 }
