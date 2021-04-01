@@ -71,7 +71,7 @@ iconDiv.innerHTML = '';
     cityNameEl.textContent = data.name + " " + currentDate.format("(M/D/YYYY)");
 
     var currentTemp = document.createElement('li');
-    currentTemp.textContent = 'Temperature: ' + data.main.temp;
+    currentTemp.textContent = 'Temperature: ' + data.main.temp + ' ℉';
     currentForcastEl.append(currentTemp);
 
     var humidity = document.createElement('li');
@@ -79,7 +79,7 @@ iconDiv.innerHTML = '';
     currentForcastEl.append(humidity);
 
     var windSpeed = document.createElement('li');
-    windSpeed.textContent = 'Wind Speed: ' + data.wind.speed;
+    windSpeed.textContent = 'Wind Speed: ' + data.wind.speed + ' MPH';
     currentForcastEl.append(windSpeed)
 
     pastSearches.push(data.name);
@@ -149,15 +149,17 @@ fetch(futureForcastUrl)
         console.log('not working')
 
     }
+
     
     for (var i = 0; i < data.daily.length; i++) {
             console.log('results!!')
             printFutureForcast(data.daily[i])
     }
     
+
     function printFutureForcast(dataObj) {
         console.log(dataObj);
-
+        
         var futureWeatherImg = dataObj.weather[0].icon;
         var iconUrl = 'http://openweathermap.org/img/wn/' + futureWeatherImg + '.png'
 
@@ -165,19 +167,20 @@ fetch(futureForcastUrl)
         futureImg.src = iconUrl
         futureWeatherEl.append(futureImg);
 
+
         if (dataObj.weather[0].icon) {
 
         }
 
         if (dataObj.temp.day) {
             var futureTemp = document.createElement('li');
-            futureTemp.textContent = dataObj.temp.day;
+            futureTemp.textContent = 'Temp: ' + dataObj.temp.day + ' ℉';
             futureWeatherEl.append(futureTemp) 
         }
 
         if (dataObj.humidity) {
             var futureHumidity = document.createElement('li');
-            futureHumidity.textContent = dataObj.humidity;
+            futureHumidity.textContent = 'Humidity: ' + dataObj.humidity;
             futureWeatherEl.append(futureHumidity) 
         }
         
