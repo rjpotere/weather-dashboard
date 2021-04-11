@@ -6,33 +6,38 @@ var searchBtn = document.querySelector('#searchBtn');
 var savedResultEl = document.getElementById('saved-cities')
 var resultsDiv = document.getElementById('result-div')
 var iconDiv = document.getElementById('icon-div')
-var futureDivEl = document.getElementById('future')
-var futureDate = document.getElementById('future-date');
-var futureIcon = document.getElementById('future-icon');
-var futureWeatherEl = document.getElementById('future-weather')
-// var forcastCard = document.createElement('div');
-// forcastCard.classList.add('forcast-card');
-// forcastResultEl.append(forcastCard);
 
-// var currentForcastResult = document.createElement('div');
-// forcastCard.append(currentForcastResult);
+var futureCard = document.getElementById('future-card')
+var futureIcon = document.getElementById('future-icon');
+var futureWeatherTemp = document.getElementById('future-temp')
+var futureWeatherHumd = document.getElementById('future-humd')
+var futureWeatherDate = document.getElementById('future-humd')
+
 
 var currentForcastEl = document.getElementById('current-forcast');
-// currentForcastResult.appendChild(currentConditionsEl);
 
-var pastSearches = [];
 var displaySearches = localStorage.getItem('pastquery');
-var displaySearchesArray = JSON.parse(displaySearches);
+var displaySearchesArray = JSON.parse(displaySearches)||[];
 
+function savedSearches() {
+savedResultEl.innerHTML = '';
 for (var i = 0; i < displaySearchesArray.length; i++) {
-    var savedCities = document.createElement('li');
+    var savedCities = document.createElement('p');
+    savedCities.classList.add("savedlist")
     savedCities.textContent = displaySearchesArray[i]
     savedResultEl.append(savedCities);
+
+    if (displaySearchesArray.length == 15){
+        displaySearchesArray = [];
+    }
 
     savedCities.addEventListener('click',function(){
         getWeather(this.textContent);
     })
-}
+    
+}}
+
+
 
 
 searchBtn.addEventListener('click', searchCriteria)
@@ -66,8 +71,7 @@ iconDiv.innerHTML = '';
         iconDiv.append(iconImg);
 
     var cityNameEl = document.getElementById('forcast-city');
-    var displayDate = document.getElementById('date');
-    displaySearchesArray.textContent = currentDate;
+    
     cityNameEl.textContent = data.name + " " + currentDate.format("(M/D/YYYY)");
 
     var currentTemp = document.createElement('li');
@@ -82,18 +86,19 @@ iconDiv.innerHTML = '';
     windSpeed.textContent = 'Wind Speed: ' + data.wind.speed + ' MPH';
     currentForcastEl.append(windSpeed)
 
-    pastSearches.push(data.name);
-    localStorage.setItem('pastquery',JSON.stringify(pastSearches));
+    displaySearchesArray.push(data.name);
+    localStorage.setItem('pastquery',JSON.stringify(displaySearchesArray));
 
     var lat = data.coord.lat;
     var lon = data.coord.lon;
 
     console.log (lat);
     console.log (lon);  
-    
+    futureCard.innerHTML = '';
 
     getUvIndex(lat,lon);
     futureWeather(lat,lon);
+    savedSearches();
 });
 }
 
@@ -151,81 +156,56 @@ fetch(futureForcastUrl)
     }
 
     
-    for (var i = 0; i < data.daily.length; i++) {
+    for (var i = 0; i < 5; i++) {
             console.log('results!!')
-            printFutureForcast(data.daily[i])
+            var currentDay = moment().add(i+1,'days').format('M/D/YYYY') //can write as d
+
+            printFutureForcast(data.daily[i],currentDay)
     }
     
 
-    function printFutureForcast(dataObj) {
+    function printFutureForcast(dataObj,currentDay) {
         console.log(dataObj);
+
+
+        var futureFiveCard = document.createElement('div')
+        futureFiveCard.classList.add('futureFiveCard')
+
+        var futureFive = document.createElement('h4');
+        futureFive.textContent = currentDay;
+        futureFiveCard.append(futureFive);
         
         var futureWeatherImg = dataObj.weather[0].icon;
         var iconUrl = 'http://openweathermap.org/img/wn/' + futureWeatherImg + '.png'
 
-        var futureImg = document.createElement('img');
-        futureImg.src = iconUrl
-        futureWeatherEl.append(futureImg);
-
 
         if (dataObj.weather[0].icon) {
-
+            var futureImg = document.createElement('img');
+            futureImg.src = iconUrl
+            futureFiveCard.append(futureImg);
         }
 
         if (dataObj.temp.day) {
-            var futureTemp = document.createElement('li');
+            var futureTemp = document.createElement('p');
             futureTemp.textContent = 'Temp: ' + dataObj.temp.day + ' ℉';
-            futureWeatherEl.append(futureTemp) 
+            futureFiveCard.append(futureTemp) 
         }
 
         if (dataObj.humidity) {
-            var futureHumidity = document.createElement('li');
+            var futureHumidity = document.createElement('p');
             futureHumidity.textContent = 'Humidity: ' + dataObj.humidity;
-            futureWeatherEl.append(futureHumidity) 
+            futureFiveCard.append(futureHumidity) 
         }
         
-    }
+        futureCard.append(futureFiveCard);
+        
+    }   
 
-        // var day1Date = data.list[1].dt_txt;
-        // var day2Date = data.list[9].dt_txt;
-        // var day3Date = data.list[17].dt_txt;
-        // var day4Date = data.list[25].dt_txt;
-        // var day5Date = data.list[33].dt_txt;
-
-        // var day1DateTemp = data.list[1].main.temp;
-        // var day2DateTemp = data.list[9].main.temp;
-        // var day3DateTemp = data.list[17].main.temp;
-        // var day4DateTemp = data.list[25].main.temp;
-        // var day5DateTemp = data.list[33].main.temp;
-
-
-        // var day1DateHumidity = data.list[1].main.humidity;
-        // var day2DateHumidity = data.list[9].main.humidity;
-        // var day3DateHumidity = data.list[17].main.humidity;
-        // var day4DateHumidity = data.list[25].main.humidity;
-        // var day5DateHumidity = data.list[33].main.humidity;
-
-
-        // console.log(day1Date)
-        // console.log(day2Date)
-        // console.log(day3Date)
-        // console.log(day4Date)
-        // console.log(day5Date)
-
-        // console.log(day1DateTemp)
-        // console.log(day2DateTemp)
-        // console.log(day3DateTemp)
-        // console.log(day4DateTemp)
-        // console.log(day5DateTemp)
-
-        // console.log(day1DateHumidity) 
-        // console.log(day2DateHumidity) 
-        // console.log(day3DateHumidity) 
-        // console.log(day4DateHumidity) 
-        // console.log(day5DateHumidity) 
-
+    
 
     });
 
 }
+
+savedSearches();
 
