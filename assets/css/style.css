@@ -21,24 +21,24 @@ header {
     margin-bottom: 30px;
 }
 
-#forcast-list {
-    text-align: center;
+p {
+    margin-bottom: 0rem;
 }
 
 
-ul li.low {
+.low {
     background: rgb(131, 243, 131);
 }
 
-ul li.moderate {
+.moderate {
     background: rgb(241, 243, 131);
 }
 
-ul li.high {
+.high {
     background: rgb(255, 161, 19);
 }
 
-ul li.extreme {
+.extreme {
     background: rgb(255, 27, 19);
 }
 
@@ -52,9 +52,8 @@ ul li.extreme {
     justify-content: center;
 }
 
-#current-forcast, #future-weather{
-    list-style-type: none;
-    padding-inline-start: 0;
+#current-forcast {
+    margin-bottom: 30px;
 
 }
 
@@ -69,16 +68,19 @@ ul li.extreme {
     font-weight: bold;
 }
 
+#fiveDay {
+    margin: 20px 0;
+}
+
 #future-card {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    margin: 0 10px;
 }
 
 .futureFiveCard {
-    margin: 55px 0;
     margin-right: 25px;
+    margin-top: 10px;
 }
 
 @media screen and (min-width: 992px) {

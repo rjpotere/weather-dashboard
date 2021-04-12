@@ -12,6 +12,7 @@ var futureIcon = document.getElementById('future-icon');
 var futureWeatherTemp = document.getElementById('future-temp')
 var futureWeatherHumd = document.getElementById('future-humd')
 var futureWeatherDate = document.getElementById('future-humd')
+var fiveDayForcast = document.getElementById('fiveDay')
 
 
 var currentForcastEl = document.getElementById('current-forcast');
@@ -74,15 +75,15 @@ iconDiv.innerHTML = '';
     
     cityNameEl.textContent = data.name + " " + currentDate.format("(M/D/YYYY)");
 
-    var currentTemp = document.createElement('li');
+    var currentTemp = document.createElement('p');
     currentTemp.textContent = 'Temperature: ' + data.main.temp + ' ℉';
     currentForcastEl.append(currentTemp);
 
-    var humidity = document.createElement('li');
+    var humidity = document.createElement('p');
     humidity.textContent = 'Humidity: ' + data.main.humidity;
     currentForcastEl.append(humidity);
 
-    var windSpeed = document.createElement('li');
+    var windSpeed = document.createElement('p');
     windSpeed.textContent = 'Wind Speed: ' + data.wind.speed + ' MPH';
     currentForcastEl.append(windSpeed)
 
@@ -119,7 +120,8 @@ function getUvIndex(lat,lon) {
 
         var uvIndexEl = data.current.uvi;
 
-        var uvIndex = document.createElement('li');
+        var uvIndex = document.createElement('span');
+        uvIndexEl.className = 'forcastPadding'
         uvIndex.textContent = 'UV Index: ' + uvIndexEl;
         currentForcastEl.appendChild(uvIndex);
 
@@ -155,6 +157,10 @@ fetch(futureForcastUrl)
 
     }
 
+    var fiveDay = document.createElement('h3');
+        fiveDay.textContent = '5 Day Forcast';
+        fiveDayForcast.append(fiveDay);
+
     
     for (var i = 0; i < 5; i++) {
             console.log('results!!')
@@ -168,8 +174,9 @@ fetch(futureForcastUrl)
         console.log(dataObj);
 
 
-        var futureFiveCard = document.createElement('div')
-        futureFiveCard.classList.add('futureFiveCard')
+        var futureFiveCard = document.createElement('div');
+        futureFiveCard.classList.add('futureFiveCard');
+
 
         var futureFive = document.createElement('h4');
         futureFive.textContent = currentDay;
