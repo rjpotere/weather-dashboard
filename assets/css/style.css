@@ -61,6 +61,11 @@ p {
     display: flex;
 }
 
+.search-history {
+    font-size: 20px;
+    padding-top: 15px;
+}
+
 .savedlist {
     cursor: pointer;
     margin: 10px 5px;
