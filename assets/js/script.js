@@ -156,6 +156,7 @@ fetch(futureForcastUrl)
         console.log('not working')
 
     }
+    fiveDayForcast.innerHTML = '';
 
     var fiveDay = document.createElement('h3');
         fiveDay.textContent = '5 Day Forcast';
